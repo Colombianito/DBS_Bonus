@@ -1,6 +1,9 @@
+package de.hsh.dbs2.imdb.entities;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+
+import de.hsh.dbs2.imdb.logic.GenreManager;
 
 public class Select
 {
@@ -11,12 +14,21 @@ public class Select
 	{
 		try
 		{
-			testInsert();
-		} catch (Exception ex)
+			select();
+			//testInsert();
+		}
+		catch (Exception ex)
 		{
 			System.out.println("Exception: " + ex.getMessage() + ex.getStackTrace() + ex.getCause());
 			System.out.println("Debug_NO: " + debug);
 		}
+	}
+	
+	public static void select() throws Exception
+	{
+		conn = ConnectionManager.getConnection();
+		GenreManager g_Manager = new GenreManager();
+		g_Manager.getGenres();
 	}
 
 	public static void testInsert() throws SQLException
