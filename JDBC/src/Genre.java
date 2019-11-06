@@ -27,7 +27,7 @@ public class Genre {
     	
 		stmt = Select_2.conn.prepareStatement(sql);
 		
-		stmt.setString(1, genre);
+		stmt.setString(1, genre + System.currentTimeMillis());
 		int rowsInserted = stmt.executeUpdate();
 		
 		System.out.println("Es wurden " + rowsInserted + " Zeilen hinzugefügt");

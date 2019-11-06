@@ -5,17 +5,17 @@ import java.util.List;
 public class Select_2
 {
 	public static Connection conn;
-    
+	public static int debug = 0;
+
 	public static void main(String[] args)
 	{
 		try
 		{
 			testInsert();
-		}
-		catch (Exception ex)
+		} catch (Exception ex)
 		{
 			System.out.println("Exception: " + ex.getMessage() + ex.getStackTrace() + ex.getCause());
-			System.out.println("LOL");
+			System.out.println("Debug_NO: " + debug);
 		}
 	}
 
@@ -26,49 +26,69 @@ public class Select_2
 		try
 		{
 			conn = ConnectionManager.getConnection();
-			
+
 			Movie movie = new Movie();
 			movie.setTitle("Die tolle Komoedie");
 			movie.setYear(2012);
 			movie.setType('C');
 			movie.insert();
-			
+
 			MovieFactory mf = new MovieFactory();
 			movie = mf.findByID(2);
-			System.out.println(mf.printMovie(movie)+ "\n");
-			
+			System.out.println(mf.printMovie(movie) + "\n");
+
 			List<Movie> list_Movie = mf.findByTitle("Green Mile");
 			System.out.println(mf.printMovie(list_Movie) + "\n");
 			
-			 Person person = new Person();
-			 person.setName("Karl Tester");
-			 person.setSex('M');
-			 person.insert();
-			 
-			 MovieCharacter chr = new MovieCharacter();
-			 chr.setMovChar_ID(movie.getMovieID());
-			 chr.setPlayerId(person.getId()); //achtung, setPlayerID
-			 chr.setCharacter("Hauptrolle");
-			 chr.setAlias(null);
-			 chr.setPos(1);
-			 chr.insert();
-			 
-			 Genre genre = new Genre();
-			 genre.setGenre("Unklar");
-			 genre.insert();
-			 
-			 MovieGenre movieGenre = new MovieGenre();
-			 movieGenre.setGenreId(genre.getId());
-			 movieGenre.setMovieId(movie.getId());
-			 movieGenre.insert();
-			 conn.commit();
+			debug = 1;
+
+			Person person = new Person();
+			person.setName("Karl Tester");
+			person.setSex('M');
+			person.insert();
+			Select_2.conn.commit();
 			
+			debug = 2;
+
+			MovieCharacter chr = new MovieCharacter();
+			chr.setMovChar_ID(movie.getMovieID());
+			chr.setPerson_ID(person.getPerson_ID()); // achtung, setPlayerID -- hasCharacter = movieID -- Plays =
+														// personID
+			debug = 3;
+			
+			chr.setMovie_ID(1);
+			chr.setPerson_ID(1);
+			chr.setCharacter("Hauptrolle");
+			chr.setAlias('s');
+			chr.setPosition(1);
+			chr.insert();
+			Select_2.conn.commit();
+			
+			debug = 4;
+
+			Genre genre = new Genre();
+			genre.setGenre("Unklar");
+			genre.insert();
+			Select_2.conn.commit();
+			
+			debug = 5;
+
+			GenreMovie genreMovie = new GenreMovie();
+			genreMovie.setGenre_ID(genre.getGenre_ID());
+			genreMovie.setMovie_ID(movie.getMovieID());
+			genreMovie.insert();
+			Select_2.conn.commit();
+			
+			debug = 6;
+
+			conn.commit();
 			conn.close();
 			ok = true;
 		}
 		finally
 		{
-			if (!ok) conn.rollback();
+			if (!ok)
+				conn.rollback();
 		}
 	}
 }

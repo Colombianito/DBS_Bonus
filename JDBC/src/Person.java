@@ -27,16 +27,18 @@ public class Person {
 	public void insert() throws SQLException
     {
     	String sql =
-    			"INSERT INTO Person" + 
-    			"VALUES(" + col_Person_ID + "," + col_Name + "," +  col_Sex +")" +
+    			"INSERT INTO Person( " + 
+    			 col_Person_ID + "," +
+				 col_Name + "," +
+    			 col_Sex +") " +
 				"VALUES(" + seq_Person_ID + ".nextval,?,?)";
     	
     	stmt = Select_2.conn.prepareStatement(sql);
     	
-    	stmt.setString(1, getName());
+    	stmt.setString(1, getName() + System.currentTimeMillis());
     	stmt.setString(2, String.valueOf(sex));
-    	int rowslnserted = stmt.executeUpdate();
     	
+    	int rowslnserted = stmt.executeUpdate();
     	stmt. close();
     	
     	if(rowslnserted < 1)

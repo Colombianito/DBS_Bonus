@@ -38,14 +38,15 @@ public class MovieCharacter {
     			" VALUES(" + seq_MovChar_ID + ".nextval, ?, ?, ?, ?, ?)";
     	
 		stmt = Select_2.conn.prepareStatement(sql);
+		stmt.setInt(1, movie_ID);
+		stmt.setInt(2, person_ID);
+		stmt.setString(3, getCharacter());
+		stmt.setString(4, String.valueOf(alias));
+		stmt.setInt(5, position);
 		
-		stmt.setString(1, getCharacter());
-		stmt.setInt(2, position);
-		stmt.setInt(3, movie_ID);
-		System.out.println(movie_ID);
-		stmt.setInt(4, person_ID);
-		System.out.println(person_ID);
-		stmt.setInt(5, alias);
+		System.out.println("Movie_ID: " + movie_ID);
+		System.out.println("Person_ID: " + person_ID);
+		
 		
 		int rowsInserted = stmt.executeUpdate();
 		
@@ -70,6 +71,7 @@ public class MovieCharacter {
 		stmt.setInt(6, movChar_ID);
 		
 		int rowsInserted = stmt.executeUpdate();
+		
 		System.out.println("Es wurden " + rowsInserted + " Zeilen verändert");
 		stmt.close();
 	}
@@ -84,8 +86,8 @@ public class MovieCharacter {
 		
 		//delete it
 		int rowsDeleted = stmt.executeUpdate();
-		System.out.println("Es wurden " + rowsDeleted + " Zeilen gelöscht");
 		
+		System.out.println("Es wurden " + rowsDeleted + " Zeilen gelöscht");
 		stmt.close();
 	}
     
