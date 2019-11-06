@@ -23,7 +23,7 @@ public class GenreMovie {
     			"INSERT INTO " + table + 
     			" VALUES(?, ?)";
     	
-		stmt = Select_2.conn.prepareStatement(sql);
+		stmt = Select.conn.prepareStatement(sql);
 		
 		stmt.setInt(1, movie_ID);
 		stmt.setInt(2, genre_ID);
@@ -40,7 +40,7 @@ public class GenreMovie {
 				" SET " + col_Movie_ID + " = ?, " + col_Genre_ID + " = ? " +
 				"WHERE " + col_Movie_ID + " = ? AND " + col_Genre_ID + " = ?";
 
-		stmt = Select_2.conn.prepareStatement(sql);
+		stmt = Select.conn.prepareStatement(sql);
 		
 		stmt.setInt(1, movie_ID);
 		stmt.setInt(2, genre_ID);
@@ -58,7 +58,7 @@ public class GenreMovie {
 				"DELETE FROM " + table +
 				" WHERE " + col_Movie_ID + " = ? AND " + col_Genre_ID + " = ?";
 		
-		stmt = Select_2.conn.prepareStatement(sql_Delete);
+		stmt = Select.conn.prepareStatement(sql_Delete);
 		
 		stmt.setInt(1, movie_ID);
 		stmt.setInt(2, genre_ID);

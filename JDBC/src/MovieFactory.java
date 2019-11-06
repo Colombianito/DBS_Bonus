@@ -18,7 +18,7 @@ public class MovieFactory {
         //SQL-Statement
         String sql_Movie_ID = "SELECT * FROM " + Movie.table + " WHERE " + Movie.col_Movie_ID + " = ?";
         System.out.println(sql_Movie_ID + "\n");
-        stmt = Select_2.conn.prepareStatement(sql_Movie_ID);
+        stmt = Select.conn.prepareStatement(sql_Movie_ID);
         
         stmt.setInt(1, movieID);
         
@@ -45,7 +45,7 @@ public class MovieFactory {
         //SQL-Statement:
         String sql_ID = "SELECT * FROM " + Movie.table + " WHERE UPPER(" + Movie.col_Title + ") LIKE UPPER('%" + title + "%')\n";
         System.out.println(sql_ID);
-        stmt = Select_2.conn.prepareStatement(sql_ID + "\n");
+        stmt = Select.conn.prepareStatement(sql_ID + "\n");
         
         //SELECT:
         ResultSet rs = stmt.executeQuery(sql_ID);

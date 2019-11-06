@@ -37,7 +37,7 @@ public class MovieCharacter {
     			"INSERT INTO " + table + 
     			" VALUES(" + seq_MovChar_ID + ".nextval, ?, ?, ?, ?, ?)";
     	
-		stmt = Select_2.conn.prepareStatement(sql);
+		stmt = Select.conn.prepareStatement(sql);
 		stmt.setInt(1, movie_ID);
 		stmt.setInt(2, person_ID);
 		stmt.setString(3, getCharacter());
@@ -61,7 +61,7 @@ public class MovieCharacter {
 						col_alias + " = ?" +
 				"WHERE " + col_MovChar_ID;
 
-		stmt = Select_2.conn.prepareStatement(sql);
+		stmt = Select.conn.prepareStatement(sql);
 		
 		stmt.setString(1, character);
 		stmt.setInt(2, position);
@@ -82,7 +82,7 @@ public class MovieCharacter {
 				"DELETE FROM " + table +
 				" WHERE " + col_MovChar_ID + " = ?";
 		
-		stmt = Select_2.conn.prepareStatement(sql_Delete);
+		stmt = Select.conn.prepareStatement(sql_Delete);
 		
 		//delete it
 		int rowsDeleted = stmt.executeUpdate();

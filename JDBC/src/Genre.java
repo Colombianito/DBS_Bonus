@@ -25,7 +25,7 @@ public class Genre {
     			"INSERT INTO " + table + 
     			" VALUES(" + seq_Genre_ID + ".nextval, ?)";
     	
-		stmt = Select_2.conn.prepareStatement(sql);
+		stmt = Select.conn.prepareStatement(sql);
 		
 		stmt.setString(1, genre + System.currentTimeMillis());
 		int rowsInserted = stmt.executeUpdate();
@@ -40,7 +40,7 @@ public class Genre {
 				" SET " + col_genre + " = ? " +
 				"WHERE " + col_genre_ID + " = ?";
 		
-		stmt = Select_2.conn.prepareStatement(sql);
+		stmt = Select.conn.prepareStatement(sql);
 		stmt.setString(1, genre);
 		stmt.setInt(2, genre_ID);
 		
@@ -56,7 +56,7 @@ public class Genre {
 				"DELETE FROM " + table +
 				" WHERE " + col_genre_ID + " = ?";
 		
-		stmt = Select_2.conn.prepareStatement(sql_Delete);
+		stmt = Select.conn.prepareStatement(sql_Delete);
 		
 		stmt.setInt(1, genre_ID);
 		

@@ -35,7 +35,7 @@ public class Movie {
 		
 		System.out.println(sql_Insert);
 
-		stmt = Select_2.conn.prepareStatement(sql_Insert);
+		stmt = Select.conn.prepareStatement(sql_Insert);
 
 		stmt.setString(1, title);
 		stmt.setInt(2, year);
@@ -49,7 +49,7 @@ public class Movie {
 
 		// Select ID FROM Movie
 		String sql_Select = "SELECT " + seq_Movie_ID + ".currval FROM DUAL";
-		stmt = Select_2.conn.prepareStatement(sql_Select);
+		stmt = Select.conn.prepareStatement(sql_Select);
 		ResultSet rs = stmt.executeQuery();
 
 		if (rs.next())
@@ -67,7 +67,7 @@ public class Movie {
 				" SET " + col_Type + " = ?, " + col_Year + " = ?, " + col_Title + " = ?" +
 				"WHERE " + col_Movie_ID + " = ?";
 		
-		stmt = Select_2.conn.prepareStatement(sql_Update);
+		stmt = Select.conn.prepareStatement(sql_Update);
 
 		stmt.setString(1, String.valueOf(type));
 		stmt.setInt(2, year);
@@ -87,7 +87,7 @@ public class Movie {
 				"DELETE FROM " + table +
 				"WHERE " + col_Movie_ID + " = ?";
 		
-		stmt = Select_2.conn.prepareStatement(sql_Delete);
+		stmt = Select.conn.prepareStatement(sql_Delete);
 
 		stmt.setInt(1, movie_ID);
 

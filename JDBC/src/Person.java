@@ -33,7 +33,7 @@ public class Person {
     			 col_Sex +") " +
 				"VALUES(" + seq_Person_ID + ".nextval,?,?)";
     	
-    	stmt = Select_2.conn.prepareStatement(sql);
+    	stmt = Select.conn.prepareStatement(sql);
     	
     	stmt.setString(1, getName() + System.currentTimeMillis());
     	stmt.setString(2, String.valueOf(sex));
@@ -52,7 +52,7 @@ public class Person {
     	
     	//ID:
     	sql = "Select " + seq_Person_ID + ".currval FROM DUAL";
-    	stmt = Select_2.conn.prepareStatement(sql);
+    	stmt = Select.conn.prepareStatement(sql);
     	ResultSet rs = stmt.executeQuery();
     	
     	if(rs.next())
@@ -71,7 +71,7 @@ public class Person {
 				" SET " + col_Name + " = ?, " + col_Sex + " = ? " +
 				"WHERE " + col_Person_ID + " = ?";
 		
-		stmt = Select_2.conn.prepareStatement(sql_Update);
+		stmt = Select.conn.prepareStatement(sql_Update);
 		stmt.setString(1, name);
 		stmt.setString(2, String.valueOf(sex));
 		stmt.setInt(3, person_ID);
@@ -89,7 +89,7 @@ public class Person {
 				"DELETE FROM " + table +
 				" WHERE " + col_Person_ID + " = ?";
 		
-		stmt = Select_2.conn.prepareStatement(sql_Delete);
+		stmt = Select.conn.prepareStatement(sql_Delete);
 		
 		stmt.setInt(1, getPerson_ID());
 		
