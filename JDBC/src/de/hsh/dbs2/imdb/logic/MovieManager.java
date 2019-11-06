@@ -16,7 +16,9 @@ public class MovieManager {
 	 * @throws Exception
 	 */
 	public List<MovieDTO> getMovieList(String search) throws Exception {
-		// TODO
+		
+		
+		
 		return new ArrayList<>();
 	}
 

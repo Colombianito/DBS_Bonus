@@ -18,12 +18,11 @@ public class GenreManager
 	public List<String> getGenres() throws Exception
 	{
 		GenreFactory gf = new GenreFactory();
-		
 		List<String> genres = new ArrayList<String>(gf.Select_All_Genres());
 
 		for(String genre : genres)
 			System.out.println(genre);
 
-		return new ArrayList<>();
+		return genres;
 	}
 }
