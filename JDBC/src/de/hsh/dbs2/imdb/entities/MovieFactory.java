@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hsh.dbs2.imdb.logic.dto.MovieDTO;
+
 public class MovieFactory {
     
 	private PreparedStatement stmt;
@@ -12,6 +14,34 @@ public class MovieFactory {
     public MovieFactory() throws SQLException
     {
     	
+    }
+    
+    public List<MovieDTO> Select_All_Movies(String search) throws SQLException
+    {
+    	//SQL-Statement:
+        String sql_ID = "SELECT * FROM " + Movie.table + " WHERE UPPER(" + Movie.col_Title + ") LIKE UPPER('%" + search + "%')\n";
+        System.out.println(sql_ID);
+        stmt = Select.conn.prepareStatement(sql_ID + "\n");
+        
+        //SELECT:
+        ResultSet rs = stmt.executeQuery(sql_ID);
+        List<MovieDTO> movies = new ArrayList<MovieDTO>();
+        
+        
+        while(rs.next())
+        {
+        	MovieDTO movie_DTO = new MovieDTO();
+        	movie_DTO.setId((long) rs.getInt(1));
+        	movie_DTO.setTitle(rs.getString(2));
+        	movie_DTO.setYear(rs.getInt(3));
+        	movie_DTO.setType(rs.getString(4)); //Achtung, convert nötig??
+        	
+        	movies.add(movie_DTO);  	
+        }
+        rs.close();
+        stmt.close();
+        
+        return movies;
     }
     
     public Movie findByID(int movieID) throws SQLException

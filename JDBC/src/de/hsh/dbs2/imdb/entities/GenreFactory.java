@@ -32,4 +32,14 @@ public class GenreFactory
         
         return genres;
 	}
+	
+	public List<String> getGenresByID(long movie_ID)
+	{
+		/*Select genre FROM GENRE g
+		inner join GENREMOVIE gm on g.GENREID = gm.GENREID
+		where MOVIEID = movie_ID;*/
+		
+		return null;
+		
+	}
 }

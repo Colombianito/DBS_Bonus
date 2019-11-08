@@ -3,6 +3,9 @@ package de.hsh.dbs2.imdb.logic;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hsh.dbs2.imdb.entities.GenreFactory;
+import de.hsh.dbs2.imdb.entities.MovieCharacterFactory;
+import de.hsh.dbs2.imdb.entities.MovieFactory;
 import de.hsh.dbs2.imdb.logic.dto.MovieDTO;
 
 public class MovieManager {
@@ -15,7 +18,18 @@ public class MovieManager {
 	 * @return Liste aller passenden Filme als MovieDTO
 	 * @throws Exception
 	 */
-	public List<MovieDTO> getMovieList(String search) throws Exception {
+	public List<MovieDTO> getMovieList(String search) throws Exception
+	{
+		MovieFactory mf 			= new MovieFactory();
+		GenreFactory gf 			= new GenreFactory();
+		MovieCharacterFactory mcf 	= new MovieCharacterFactory();
+		
+		List<MovieDTO> movie_DTO = new ArrayList<MovieDTO>(mf.Select_All_Movies(search));
+		
+		for(int i = 0; i < movie_DTO.size(); i++)
+		{
+			movie_DTO.get(i).addGenre(gf.getGenresByID(movie_DTO.get(i).getId()));
+		}
 		
 		
 		
