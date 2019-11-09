@@ -16,9 +16,10 @@ public class MovieCharacterFactory
 	{
 		//SQL-Statement:
         String sql_Select_Character =
-        		"SELECT " + MovieCharacter.col_Person_ID + "," +MovieCharacter.col_Character + "," + MovieCharacter.col_alias +
+        		"SELECT " + MovieCharacter.col_Character + "," + MovieCharacter.col_alias + "," + Person.col_Name +
         		" FROM " + MovieCharacter.table +
-        		" WHERE " + Movie.col_Movie_ID + " = " + movie_ID;
+        		" INNER JOIN " + Person.table + " ON " + MovieCharacter.col_Person_ID + " = " + Person.col_Person_ID +
+        		" WHERE " + MovieCharacter.col_Movie_ID + " = " + movie_ID;
         
         System.out.println(sql_Select_Character);
         stmt = Select.conn.prepareStatement(sql_Select_Character);
@@ -31,9 +32,9 @@ public class MovieCharacterFactory
     	{
     		CharacterDTO charDTO = new CharacterDTO();
     		
-    		charDTO.setPerson_ID(rs.getInt(1));
-    		charDTO.setCharacter(rs.getString(2));
-    		charDTO.setAlias(rs.getString(3));
+    		charDTO.setCharacter(rs.getString(1));
+    		charDTO.setAlias(rs.getString(2));
+    		charDTO.setPlayer(rs.getString(3)); //Player = Person.Name
     		
     		arrL_charDTO.add(charDTO);
     	}

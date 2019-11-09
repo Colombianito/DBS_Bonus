@@ -18,15 +18,26 @@ public class MovieFactory {
     
     public List<MovieDTO> Select_All_MoviesByTitel(String search) throws SQLException
     {
-    	//SQL-Statement:
-        String sql_Select_Titel = "SELECT * FROM " + Movie.table + " WHERE UPPER(" + Movie.col_Title + ") LIKE UPPER('%" + search + "%')\n";
+    	List<MovieDTO> arrL_Movies = new ArrayList<MovieDTO>(); //Träger für die MovieDTO-Objekte
+    	String sql_Select_Titel = "";
+    	
+    	if(titel_IsEmpty(search))
+    	{
+    		//SQL-Statement:
+            sql_Select_Titel =
+		    		"SELECT * FROM " + Movie.table;
+    	}
+    	else
+    	{
+    		//SQL-Statement:
+            sql_Select_Titel =
+		    		"SELECT * FROM " + Movie.table +
+		    		" WHERE UPPER(" + Movie.col_Title + ") LIKE UPPER('%" + search + "%')";
+    	}	
         System.out.println(sql_Select_Titel);
+        
         stmt = Select.conn.prepareStatement(sql_Select_Titel);
-        
-        //EXEC SELECT:
-        ResultSet rs = stmt.executeQuery();
-        
-        List<MovieDTO> arrL_Movies = new ArrayList<MovieDTO>(); //Träger für die MovieDTO-Objekte
+        ResultSet rs = stmt.executeQuery(); //EXEC SELECT:
         
         /*Hier werden alle Movie-Klassenattribute außer Genre und Cahracter gefüllt.
         Genre und Character werden später gefüllt / ergänzt durch die dazu vorgesehene Factory MovieCharacterFactory*/
@@ -45,6 +56,17 @@ public class MovieFactory {
         stmt.close();
         
         return arrL_Movies;
+    }
+    
+    public boolean titel_IsEmpty(String search)
+    {
+    	boolean isEmpty = true;
+    	
+    	if( !(search  == "" || search == " " || search == null) )
+    	{
+    		isEmpty = false;
+    	}
+    	return isEmpty;
     }
     
     public Movie findByID(int movieID) throws SQLException
@@ -71,6 +93,7 @@ public class MovieFactory {
         }
         rs.close();
         stmt.close();
+        
         return movie;
     }
     

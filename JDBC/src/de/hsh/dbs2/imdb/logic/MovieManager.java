@@ -43,7 +43,7 @@ public class MovieManager {
 			movie_DTO.get(i).addGenre(genre);*/
 			
 			List<CharacterDTO> character_DTO = new ArrayList<CharacterDTO>(mcf.Select_MovieCharacterByMovieID(movie.getId()));
-			movie.setCharacters(character_DTO);	
+			movie.setCharacters(character_DTO);
 		}
 		return movie_DTO;
 	}
@@ -72,7 +72,10 @@ public class MovieManager {
 	}
 
 	public MovieDTO getMovie(long movieId) throws Exception {
-		// TODO Auto-generated method stub
+		
+		//MovieDTO Iteration über movieID
+		//Gebe Movie aus
+		
 		return null;
 	}
 

@@ -41,7 +41,7 @@ public class TabModelCharacter extends AbstractTableModel {
 		else if (column == 1)
 			return data.get(row).getAlias();
 		else if (column == 2)
-			return data.get(row).getPlayer();
+			return data.get(row).getPlayer(); //orig: getPlayer()
 		return null;
 	}
 
