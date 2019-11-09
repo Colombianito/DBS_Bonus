@@ -8,13 +8,15 @@ import java.util.ResourceBundle;
 // die Connection-Parameter müssen in der Property-Datei
 // connect.properties festgelegt werden
 
-public class ConnectionManager {
-
-  private static ResourceBundle b;
-  private static String uid;
-  private static String pwd;
-  private static String driver;
-  private static String dburl;
+public class ConnectionManager
+{
+	public static Connection conn;
+	
+	private static ResourceBundle b;
+	private static String uid;
+	private static String pwd;
+	private static String driver;
+	private static String dburl;
 
   static {
       // die Initialisierung von Treiber und Connect-Parameter findet
@@ -43,8 +45,6 @@ public class ConnectionManager {
   // es k�nnen mehrere Connections angefordert werden
 
   static public Connection getConnection() throws SQLException  {
-
-    Connection conn = null;
     
     try
     {

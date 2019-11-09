@@ -5,13 +5,14 @@ package de.hsh.dbs2.imdb.logic.dto;
  * Enthaelt alles noetige fuer die Kommunikation GUI <-> Geschaeftslogik.
  */
 public class CharacterDTO {
+	
+	private int person_ID; //Player
 	private String character;
 	private String alias;
-	private String player;
 	
 	public CharacterDTO(CharacterDTO that) {
 		this.character = that.character;
-		this.player = that.player;
+		this.person_ID = that.person_ID;
 		this.alias = that.alias;
 	}
 	
@@ -26,12 +27,12 @@ public class CharacterDTO {
 		this.character = character;
 	}
 	
-	public String getPlayer() {
-		return player;
+	public int getPerson_ID() {
+		return person_ID;
 	}
 	
-	public void setPlayer(String player) {
-		this.player = player;
+	public void setPerson_ID(int person_ID) {
+		this.person_ID = person_ID;
 	}
 
 	public String getAlias() {

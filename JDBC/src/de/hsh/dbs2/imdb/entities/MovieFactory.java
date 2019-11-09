@@ -16,32 +16,35 @@ public class MovieFactory {
     	
     }
     
-    public List<MovieDTO> Select_All_Movies(String search) throws SQLException
+    public List<MovieDTO> Select_All_MoviesByTitel(String search) throws SQLException
     {
     	//SQL-Statement:
-        String sql_ID = "SELECT * FROM " + Movie.table + " WHERE UPPER(" + Movie.col_Title + ") LIKE UPPER('%" + search + "%')\n";
-        System.out.println(sql_ID);
-        stmt = Select.conn.prepareStatement(sql_ID + "\n");
+        String sql_Select_Titel = "SELECT * FROM " + Movie.table + " WHERE UPPER(" + Movie.col_Title + ") LIKE UPPER('%" + search + "%')\n";
+        System.out.println(sql_Select_Titel);
+        stmt = Select.conn.prepareStatement(sql_Select_Titel);
         
-        //SELECT:
-        ResultSet rs = stmt.executeQuery(sql_ID);
-        List<MovieDTO> movies = new ArrayList<MovieDTO>();
+        //EXEC SELECT:
+        ResultSet rs = stmt.executeQuery();
         
+        List<MovieDTO> arrL_Movies = new ArrayList<MovieDTO>(); //Träger für die MovieDTO-Objekte
         
+        /*Hier werden alle Movie-Klassenattribute außer Genre und Cahracter gefüllt.
+        Genre und Character werden später gefüllt / ergänzt durch die dazu vorgesehene Factory MovieCharacterFactory*/
         while(rs.next())
         {
-        	MovieDTO movie_DTO = new MovieDTO();
-        	movie_DTO.setId((long) rs.getInt(1));
+        	MovieDTO movie_DTO = new MovieDTO(); //Wird hier Instanziiert um das Objekt mit den Daten aus der MovieDTO-ArrayList zu füllen
+        	
+        	movie_DTO.setId(rs.getLong(1)); //getInt oder getLong?
         	movie_DTO.setTitle(rs.getString(2));
         	movie_DTO.setYear(rs.getInt(3));
         	movie_DTO.setType(rs.getString(4)); //Achtung, convert nötig??
         	
-        	movies.add(movie_DTO);  	
+        	arrL_Movies.add(movie_DTO);
         }
         rs.close();
         stmt.close();
         
-        return movies;
+        return arrL_Movies;
     }
     
     public Movie findByID(int movieID) throws SQLException
@@ -100,7 +103,7 @@ public class MovieFactory {
     }
     
 
-    public String printMovie(List<Movie> movies)
+    public String printMovieList(List<Movie> movies)
     {
     	String str_Movie = "";
     	

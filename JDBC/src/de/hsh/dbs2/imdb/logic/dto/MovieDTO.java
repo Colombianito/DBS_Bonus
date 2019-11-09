@@ -63,7 +63,7 @@ public class MovieDTO {
 	public void setCharacters(List<CharacterDTO> characters) {
 		this.characters = characters;
 	}
-	public void setGenres(Set<String> genres2) {
-		this.genres = genres2;
+	public void setGenres(Set<String> genres) {
+		this.genres = genres;
 	}
 }

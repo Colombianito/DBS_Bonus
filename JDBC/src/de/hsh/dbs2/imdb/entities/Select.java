@@ -50,7 +50,7 @@ public class Select
 			System.out.println(mf.printMovie(movie) + "\n");
 
 			List<Movie> list_Movie = mf.findByTitle("Green Mile");
-			System.out.println(mf.printMovie(list_Movie) + "\n");
+			System.out.println(mf.printMovieList(list_Movie) + "\n");
 			
 			debug = 1;
 
@@ -64,8 +64,7 @@ public class Select
 
 			MovieCharacter chr = new MovieCharacter();
 			chr.setMovChar_ID(movie.getMovieID());
-			chr.setPerson_ID(person.getPerson_ID()); // achtung, setPlayerID -- hasCharacter = movieID -- Plays =
-														// personID
+			chr.setPerson_ID(person.getPerson_ID()); // achtung, setPlayerID -- hasCharacter = movieID -- Plays = personID
 			debug = 3;
 			
 			chr.setMovie_ID(1);

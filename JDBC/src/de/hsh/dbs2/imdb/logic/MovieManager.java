@@ -1,11 +1,14 @@
 package de.hsh.dbs2.imdb.logic;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import de.hsh.dbs2.imdb.entities.GenreFactory;
 import de.hsh.dbs2.imdb.entities.MovieCharacterFactory;
 import de.hsh.dbs2.imdb.entities.MovieFactory;
+import de.hsh.dbs2.imdb.logic.dto.CharacterDTO;
 import de.hsh.dbs2.imdb.logic.dto.MovieDTO;
 
 public class MovieManager {
@@ -24,16 +27,25 @@ public class MovieManager {
 		GenreFactory gf 			= new GenreFactory();
 		MovieCharacterFactory mcf 	= new MovieCharacterFactory();
 		
-		List<MovieDTO> movie_DTO = new ArrayList<MovieDTO>(mf.Select_All_Movies(search));
+		List<MovieDTO> movie_DTO = new ArrayList<MovieDTO>(mf.Select_All_MoviesByTitel(search));
 		
 		for(int i = 0; i < movie_DTO.size(); i++)
 		{
-			movie_DTO.get(i).addGenre(gf.getGenresByID(movie_DTO.get(i).getId()));
+			MovieDTO movie = movie_DTO.get(i); //Ein einzelnes Movie
+			
+			//Holt alle Genres pro Movie_ID mithilfe der getGenresByID-Methode und fügt sie der String-Liste genres hinzu
+			Set<String> genres = new HashSet<String>(gf.getGenresByID(movie.getId())); 
+			
+			movie.setGenres(genres); //Fügt das Set von Genres dem einzelnen MovieDTO hinzu
+			
+			/*Fügt jedes Genre dem MovieDTO-Objekt seiner String-Liste hinzu
+			for(String genre: genres)
+			movie_DTO.get(i).addGenre(genre);*/
+			
+			List<CharacterDTO> character_DTO = new ArrayList<CharacterDTO>(mcf.Select_MovieCharacterByMovieID(movie.getId()));
+			movie.setCharacters(character_DTO);	
 		}
-		
-		
-		
-		return new ArrayList<>();
+		return movie_DTO;
 	}
 
 	/**
