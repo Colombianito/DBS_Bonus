@@ -1,7 +1,7 @@
 package de.hsh.dbs2.imdb.entities;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +9,7 @@ import de.hsh.dbs2.imdb.logic.dto.MovieDTO;
 
 public class MovieFactory {
     
-	private PreparedStatement stmt;
+	private Statement stmt;
 	
     public MovieFactory() throws SQLException
     {
@@ -19,29 +19,15 @@ public class MovieFactory {
     public List<MovieDTO> Select_All_MoviesByTitel(String search) throws SQLException
     {
     	List<MovieDTO> arrL_Movies = new ArrayList<MovieDTO>(); //Träger für die MovieDTO-Objekte
-    	String sql_Select_Titel = "";
 
-    	if(titel_IsEmpty(search))
-    	{
-    		//SQL-Statement:
-            sql_Select_Titel =
-		    		"SELECT * FROM " + Movie.table;
-            
-            stmt = Select.conn.prepareStatement(sql_Select_Titel);
-    	}
-    	else
-    	{
-    		//SQL-Statement:
-            sql_Select_Titel = "SELECT * FROM Movie WHERE UPPER(Title) LIKE UPPER(%?%)";
-		    		//"SELECT * FROM " + Movie.table +
-		    		//" WHERE UPPER(" + Movie.col_Title + ") LIKE UPPER('%?%')";
-            System.out.println(sql_Select_Titel);
-            stmt = Select.conn.prepareStatement(sql_Select_Titel);
-            stmt.setString(1, "h");
-    	}	
+		//SQL-Statement:
+        String sql_Select_Titel = "SELECT * FROM Movie WHERE UPPER(Title) LIKE UPPER('%" + search + "%')";
+        stmt = ConnectionManager.getConnection().createStatement();
         System.out.println(sql_Select_Titel);
+        //stmt = Select.conn.createStatement();
+        //stmt.setString(1, search);
         
-        ResultSet rs = stmt.executeQuery(); //EXEC SELECT:
+        ResultSet rs = stmt.executeQuery(sql_Select_Titel); //EXEC SELECT:
         
         /*Hier werden alle Movie-Klassenattribute außer Genre und Cahracter gefüllt.
         Genre und Character werden später gefüllt / ergänzt durch die dazu vorgesehene Factory MovieCharacterFactory*/
@@ -62,18 +48,6 @@ public class MovieFactory {
         return arrL_Movies;
     }
     
-    public boolean titel_IsEmpty(String search)
-    {
-    	search = "h";
-    	boolean isEmpty = false;
-    	
-    	if(search.isEmpty()|| search == " " || search == null )
-    	{
-    		isEmpty = true;
-    	}
-    	return isEmpty;
-    }
-    
     public Movie findByID(int movieID) throws SQLException
     {
         //SQL-Statement
@@ -81,10 +55,10 @@ public class MovieFactory {
         System.out.println(sql_Movie_ID + "\n");
         stmt = Select.conn.prepareStatement(sql_Movie_ID);
         
-        stmt.setInt(1, movieID);
+        //stmt.set(1, movieID);
         
         //SELECT:
-        ResultSet rs = stmt.executeQuery();
+        ResultSet rs = stmt.executeQuery(sql_Movie_ID);
         
         Movie movie = null;
         

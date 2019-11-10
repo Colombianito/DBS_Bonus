@@ -13,6 +13,7 @@ import de.hsh.dbs2.imdb.logic.dto.MovieDTO;
 
 public class MovieManager {
 
+	List<MovieDTO> movie_DTO = new ArrayList<MovieDTO>();
 	/**
 	 * Ermittelt alle Filme, deren Filmtitel den Suchstring enthaelt.
 	 * Wenn der String leer ist, sollen alle Filme zurueckgegeben werden.
@@ -27,7 +28,8 @@ public class MovieManager {
 		GenreFactory gf 			= new GenreFactory();
 		MovieCharacterFactory mcf 	= new MovieCharacterFactory();
 		
-		List<MovieDTO> movie_DTO = new ArrayList<MovieDTO>(mf.Select_All_MoviesByTitel(search));
+		movie_DTO = new ArrayList<MovieDTO>(mf.Select_All_MoviesByTitel(search));
+		
 		System.out.println("Checkpoint: 1");
 		
 		for(int i = 0; i < movie_DTO.size(); i++)
@@ -39,25 +41,12 @@ public class MovieManager {
 			
 			movie.setGenres(genres); //Fügt das Set von Genres dem einzelnen MovieDTO hinzu
 			
-			/*Fügt jedes Genre dem MovieDTO-Objekt seiner String-Liste hinzu
-			for(String genre: genres)
-			movie_DTO.get(i).addGenre(genre);*/
-			
 			List<CharacterDTO> character_DTO = new ArrayList<CharacterDTO>(mcf.Select_MovieCharacterByMovieID(movie.getId()));
 			movie.setCharacters(character_DTO);
 		}
 		
 		System.out.println("Checkpoint: 2");
-		
-//		for(int i = 0; i < movie_DTO.size(); i++)
-//		{
-//			System.out.println(
-//					movie_DTO.get(i).getCharacters().get(i).getAlias()+ " " + 
-//					movie_DTO.get(i).getCharacters().get(i).getCharacter()+ " " +
-//					movie_DTO.get(i).getCharacters().get(i).getPlayer()+ " " +
-//					movie_DTO.get(i).getGenres().toString());
-//		}
-		
+
 		return movie_DTO;
 	}
 
@@ -70,8 +59,9 @@ public class MovieManager {
 	 * @param movie Film-Objekt mit Genres und Charakteren.
 	 * @throws Exception
 	 */
-	public void insertUpdateMovie(MovieDTO movieDTO) throws Exception {
-		// TODO
+	public void insertUpdateMovie(MovieDTO movieDTO) throws Exception
+	{
+		
 	}
 
 	/**

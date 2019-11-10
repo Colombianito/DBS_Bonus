@@ -1,8 +1,8 @@
 package de.hsh.dbs2.imdb.entities;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +10,7 @@ import de.hsh.dbs2.imdb.logic.dto.CharacterDTO;
 
 public class MovieCharacterFactory
 {
-	PreparedStatement stmt;
+	Statement stmt;
 	
 	public List<CharacterDTO> Select_MovieCharacterByMovieID(long movie_ID) throws SQLException
 	{
@@ -22,10 +22,10 @@ public class MovieCharacterFactory
         		" WHERE " + MovieCharacter.col_Movie_ID + " = " + movie_ID;
         
         System.out.println(sql_Select_Character);
-        stmt = Select.conn.prepareStatement(sql_Select_Character);
+        stmt = ConnectionManager.getConnection().createStatement();
         
         //EXEC SELECT:
-        ResultSet rs = stmt.executeQuery();
+        ResultSet rs = stmt.executeQuery(sql_Select_Character);
     	List<CharacterDTO> arrL_charDTO = new ArrayList<CharacterDTO>();
     	
     	while(rs.next()) //Fülle jedes neue charDTO mit den ausgelesenen Werten
