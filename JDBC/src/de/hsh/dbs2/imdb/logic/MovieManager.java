@@ -28,6 +28,7 @@ public class MovieManager {
 		MovieCharacterFactory mcf 	= new MovieCharacterFactory();
 		
 		List<MovieDTO> movie_DTO = new ArrayList<MovieDTO>(mf.Select_All_MoviesByTitel(search));
+		System.out.println("Checkpoint: 1");
 		
 		for(int i = 0; i < movie_DTO.size(); i++)
 		{
@@ -45,6 +46,18 @@ public class MovieManager {
 			List<CharacterDTO> character_DTO = new ArrayList<CharacterDTO>(mcf.Select_MovieCharacterByMovieID(movie.getId()));
 			movie.setCharacters(character_DTO);
 		}
+		
+		System.out.println("Checkpoint: 2");
+		
+//		for(int i = 0; i < movie_DTO.size(); i++)
+//		{
+//			System.out.println(
+//					movie_DTO.get(i).getCharacters().get(i).getAlias()+ " " + 
+//					movie_DTO.get(i).getCharacters().get(i).getCharacter()+ " " +
+//					movie_DTO.get(i).getCharacters().get(i).getPlayer()+ " " +
+//					movie_DTO.get(i).getGenres().toString());
+//		}
+		
 		return movie_DTO;
 	}
 

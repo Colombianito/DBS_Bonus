@@ -38,15 +38,15 @@ public class GenreFactory
 	
 	public Set<String> getGenresByID(long movie_ID) throws SQLException
 	{
-		
 		//SQL-Statement
         String sql_Select_Genres =
-        		"SELECT " + Genre.col_genre +
-        		"FROM " + Genre.table +
-        		"INNER JOIN " + GenreMovie.table + " ON " + Genre.col_genre_ID + " = " + GenreMovie.col_Genre_ID +
+        		"SELECT " + "g." + Genre.col_genre +
+        		" FROM " + Genre.table + " g" + 
+        		" INNER JOIN " + GenreMovie.table + " gm " + " ON g." + Genre.col_genre_ID + " = gm." + GenreMovie.col_Genre_ID +
         		" WHERE " + Movie.col_Movie_ID + " = " + movie_ID;
         
-        System.out.println(sql_Select_Genres + "\n");
+        System.out.println(sql_Select_Genres);
+        
         stmt = Select.conn.prepareStatement(sql_Select_Genres);
         
         //EXEC SELECT:

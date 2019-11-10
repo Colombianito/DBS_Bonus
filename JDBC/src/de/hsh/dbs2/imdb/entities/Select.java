@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import de.hsh.dbs2.imdb.logic.GenreManager;
+import de.hsh.dbs2.imdb.logic.MovieManager;
 
 public class Select
 {
@@ -14,7 +15,11 @@ public class Select
 	{
 		try
 		{
-			select();
+			conn = ConnectionManager.getConnection();
+			
+			MovieManager manager = new MovieManager();
+			manager.getMovieList("");
+			//select();
 			//testInsert();
 		}
 		catch (Exception ex)

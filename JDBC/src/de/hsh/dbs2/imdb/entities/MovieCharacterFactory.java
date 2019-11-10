@@ -16,9 +16,9 @@ public class MovieCharacterFactory
 	{
 		//SQL-Statement:
         String sql_Select_Character =
-        		"SELECT " + MovieCharacter.col_Character + "," + MovieCharacter.col_alias + "," + Person.col_Name +
-        		" FROM " + MovieCharacter.table +
-        		" INNER JOIN " + Person.table + " ON " + MovieCharacter.col_Person_ID + " = " + Person.col_Person_ID +
+        		"SELECT " + "mc." + MovieCharacter.col_Character + "," + "mc." + MovieCharacter.col_alias + "," + "p." + Person.col_Name +
+        		" FROM " + MovieCharacter.table + " mc" +
+        		" INNER JOIN " + Person.table + " p" + " ON mc." + MovieCharacter.col_Person_ID + " = p." + Person.col_Person_ID +
         		" WHERE " + MovieCharacter.col_Movie_ID + " = " + movie_ID;
         
         System.out.println(sql_Select_Character);
