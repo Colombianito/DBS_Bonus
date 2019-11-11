@@ -1,7 +1,9 @@
 package de.hsh.dbs2.imdb.logic;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import de.hsh.dbs2.imdb.entities.PersonFactory;
 
 public class PersonManager {
 
@@ -11,9 +13,21 @@ public class PersonManager {
 	 * @return Liste mit passenden Personennamen, die in der Datenbank eingetragen sind.
 	 * @throws Exception
 	 */
-	public List<String> getPersonList(String text) throws Exception {
-		// TODO
-		return new ArrayList<>();
+	public List<String> getPersonList(String text)
+	{
+		PersonFactory pf = new PersonFactory();
+		List<String> personList = null;
+		
+		try
+		{
+			personList = pf.Select_Persons_By_Name(text);
+		}
+		catch(SQLException ex_SQL)
+		{
+			ex_SQL.printStackTrace();
+		}
+        
+		return new ArrayList<>(personList);
 	}
 
 }

@@ -11,10 +11,10 @@ import de.hsh.dbs2.imdb.util.DBConnection;
 
 public class MovieCharacterFactory
 {
-	Statement stmt;
-	
-	public List<CharacterDTO> Select_MovieCharacterByMovieID(long movie_ID) throws SQLException
+	public List<CharacterDTO> Select_MovieCharacterByMovieID(long movie_ID)
 	{
+		List<CharacterDTO> arrL_charDTO = new ArrayList<CharacterDTO>();
+		
 		//SQL-Statement:
         String sql_Select_Character =
         		"SELECT " + "mc." + MovieCharacter.col_Character + "," + "mc." + MovieCharacter.col_alias + "," + "p." + Person.col_Name +
@@ -23,22 +23,27 @@ public class MovieCharacterFactory
         		" WHERE " + MovieCharacter.col_Movie_ID + " = " + movie_ID;
         
         System.out.println(sql_Select_Character);
-        stmt = DBConnection.getConnection().createStatement();
         
-        //EXEC SELECT:
-        ResultSet rs = stmt.executeQuery(sql_Select_Character);
-    	List<CharacterDTO> arrL_charDTO = new ArrayList<CharacterDTO>();
-    	
-    	while(rs.next()) //Fülle jedes neue charDTO mit den ausgelesenen Werten
-    	{
-    		CharacterDTO charDTO = new CharacterDTO();
-    		
-    		charDTO.setCharacter(rs.getString(1));
-    		charDTO.setAlias(rs.getString(2));
-    		charDTO.setPlayer(rs.getString(3)); //Player = Person.Name
-    		
-    		arrL_charDTO.add(charDTO);
-    	}
+        try
+        {
+	        Statement stmt = DBConnection.getConnection().createStatement();
+	        ResultSet rs = stmt.executeQuery(sql_Select_Character);
+	    	
+	    	while(rs.next()) //Fülle jedes neue charDTO mit den ausgelesenen Werten
+	    	{
+	    		CharacterDTO charDTO = new CharacterDTO();
+	    		
+	    		charDTO.setCharacter(rs.getString(1));
+	    		charDTO.setAlias(rs.getString(2));
+	    		charDTO.setPlayer(rs.getString(3)); //Player = Person.Name
+	    		
+	    		arrL_charDTO.add(charDTO);
+	    	}
+        }
+        catch(SQLException ex_SQL)
+        {
+        	ex_SQL.printStackTrace();
+        }
 		
 		return arrL_charDTO;
 	}

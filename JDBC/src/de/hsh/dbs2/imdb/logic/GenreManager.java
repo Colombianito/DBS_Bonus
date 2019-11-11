@@ -30,7 +30,7 @@ public class GenreManager
 		}
 		catch(SQLException ex_SQL)
 		{
-			
+			ex_SQL.printStackTrace();
 		}
 		return genres;
 	}

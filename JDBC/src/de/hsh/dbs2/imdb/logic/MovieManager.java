@@ -1,5 +1,6 @@
 package de.hsh.dbs2.imdb.logic;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -103,13 +104,38 @@ public class MovieManager {
 	 * @param movie
 	 * @throws Exception
 	 */
-	public void deleteMovie(long movieId) throws Exception {
-		// TODO Auto-generated method stub
+	public void deleteMovie(long movieId) throws Exception
+	{
+		String sql = "DELETE FROM MOVIE WHERE movieID = ?";
+
+		try
+		{
+			PreparedStatement stmt = DBConnection.getConnection().prepareStatement(sql);
+			stmt.setLong(1, movieId);
+			stmt.executeUpdate();
+			DBConnection.getConnection().commit();
+		}
+		catch (SQLException ex_SQL)
+		{
+			ex_SQL.printStackTrace();
+			DBConnection.getConnection().rollback();
+			System.out.println("Command rolled back");
+		}
 	}
 
-	public MovieDTO getMovie(long movieId) throws Exception {
+	public MovieDTO getMovie(long movieId)
+	{
+		MovieDTO movieDTO = null;
 		
-		return MovieFactory.getMovieByID(movieId);
+		try
+		{
+			movieDTO =  MovieFactory.getMovieByID(movieId);
+		}
+		catch(SQLException ex_SQL)
+		{
+			ex_SQL.printStackTrace();
+		}
+		return movieDTO;
 	}
 
 }

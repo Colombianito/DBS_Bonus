@@ -20,10 +20,10 @@ public class MovieFactory {
 
 		//SQL-Statement:
         String sql_Select_Titel = "SELECT * FROM Movie WHERE UPPER(Title) LIKE UPPER('%" + search + "%')";
-        stmt = DBConnection.getConnection().createStatement();
         System.out.println(sql_Select_Titel);
-        //stmt = Select.conn.createStatement();
-        //stmt.setString(1, search);
+        
+        stmt = DBConnection.getConnection().createStatement();
+        
         
         ResultSet rs = stmt.executeQuery(sql_Select_Titel); //EXEC SELECT:
         
