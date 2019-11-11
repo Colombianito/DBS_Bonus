@@ -103,6 +103,15 @@ public class MovieFactory {
         }
     }
     
+    public void deleteMovieByID(long movieID) throws SQLException
+    {
+    	String sql_Delete = "DELETE FROM MOVIE WHERE movieID = ?";
+    	
+    	PreparedStatement stmt = DBConnection.getConnection().prepareStatement(sql_Delete);
+		stmt.setLong(1, movieID);
+		stmt.executeUpdate();	
+    }
+    
     public List<Movie> findByTitle(String title) throws SQLException
     {
         //SQL-Statement:

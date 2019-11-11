@@ -106,13 +106,9 @@ public class MovieManager {
 	 */
 	public void deleteMovie(long movieId) throws Exception
 	{
-		String sql = "DELETE FROM MOVIE WHERE movieID = ?";
-
 		try
 		{
-			PreparedStatement stmt = DBConnection.getConnection().prepareStatement(sql);
-			stmt.setLong(1, movieId);
-			stmt.executeUpdate();
+			mf.deleteMovieByID(movieId);
 			DBConnection.getConnection().commit();
 		}
 		catch (SQLException ex_SQL)
