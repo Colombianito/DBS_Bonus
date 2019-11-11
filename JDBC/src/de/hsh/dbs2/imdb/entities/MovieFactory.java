@@ -83,9 +83,9 @@ public class MovieFactory {
     }
     
     public void updateMovie(MovieDTO movie) throws SQLException {
-        String sql = "UPDATE Movie SET  TITLE = ?, Year = ?, TYPE = ? WHERE MOVIEID = ?";
-
-
+        String sql = "UPDATE Movie SET TITLE = ?, Year = ?, TYPE = ? WHERE MOVIEID = ?";
+        System.out.println(sql);
+        
         try {
 
             PreparedStatement stmt = DBConnection.getConnection().prepareStatement(sql);

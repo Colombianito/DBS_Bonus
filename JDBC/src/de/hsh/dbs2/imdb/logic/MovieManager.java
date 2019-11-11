@@ -31,7 +31,7 @@ public class MovieManager {
 	 * @return Liste aller passenden Filme als MovieDTO
 	 * @throws Exception
 	 */
-	public List<MovieDTO> getMovieList(String search)
+	public List<MovieDTO> getMovieList(String search) //ToDo
 	{
 		try
 		{

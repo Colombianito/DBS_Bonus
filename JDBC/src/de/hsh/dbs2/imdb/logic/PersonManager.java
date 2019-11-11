@@ -1,7 +1,6 @@
 package de.hsh.dbs2.imdb.logic;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import de.hsh.dbs2.imdb.entities.PersonFactory;
 
@@ -27,7 +26,7 @@ public class PersonManager {
 			ex_SQL.printStackTrace();
 		}
         
-		return new ArrayList<>(personList);
+		return personList;
 	}
 
 }
