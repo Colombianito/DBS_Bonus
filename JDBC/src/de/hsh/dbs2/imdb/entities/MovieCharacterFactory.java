@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hsh.dbs2.imdb.logic.dto.CharacterDTO;
+import de.hsh.dbs2.imdb.util.DBConnection;
 
 public class MovieCharacterFactory
 {
@@ -22,7 +23,7 @@ public class MovieCharacterFactory
         		" WHERE " + MovieCharacter.col_Movie_ID + " = " + movie_ID;
         
         System.out.println(sql_Select_Character);
-        stmt = ConnectionManager.getConnection().createStatement();
+        stmt = DBConnection.getConnection().createStatement();
         
         //EXEC SELECT:
         ResultSet rs = stmt.executeQuery(sql_Select_Character);

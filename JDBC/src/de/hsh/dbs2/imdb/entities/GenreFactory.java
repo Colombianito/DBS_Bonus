@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import de.hsh.dbs2.imdb.util.DBConnection;
+
 public class GenreFactory
 {
 	Statement stmt;
@@ -19,7 +21,7 @@ public class GenreFactory
         		" FROM " + Genre.table +
         		" ORDER BY " + Genre.col_genre + " asc"; //Genres alphabetic sortet
         
-        stmt = ConnectionManager.getConnection().createStatement();
+        stmt = DBConnection.getConnection().createStatement();
         System.out.println(sql_Select_Genres);
         
         //EXEC SELECT:
@@ -36,7 +38,7 @@ public class GenreFactory
         return arrL_Genres;
 	}
 	
-	public Set<String> getGenresByID(long movie_ID) throws SQLException
+	public Set<String> Select_Genres_By_MovieID(long movie_ID) throws SQLException
 	{
 		//SQL-Statement
         String sql_Select_Genres =
@@ -46,7 +48,7 @@ public class GenreFactory
         		" WHERE " + Movie.col_Movie_ID + " = " + movie_ID;
         
         System.out.println(sql_Select_Genres);
-        stmt = ConnectionManager.getConnection().createStatement();
+        stmt = DBConnection.getConnection().createStatement();
         
         //EXEC SELECT:
         ResultSet rs = stmt.executeQuery(sql_Select_Genres);

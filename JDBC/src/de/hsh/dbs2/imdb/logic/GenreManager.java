@@ -1,5 +1,6 @@
 package de.hsh.dbs2.imdb.logic;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,14 +16,22 @@ public class GenreManager
 	 * @return Alle Genre-Namen als String-Liste
 	 * @throws Exception
 	 */
-	public List<String> getGenres() throws Exception
-	{
+	public List<String> getGenres()
+	{	
 		GenreFactory gf = new GenreFactory();
-		List<String> genres = new ArrayList<String>(gf.Select_All_Genres());
-
-		for(String genre : genres)
-			System.out.println(genre);
-
+		List<String> genres = null;
+		
+		try
+		{
+			genres = new ArrayList<String>(gf.Select_All_Genres()); //Hier moviedto longid
+			
+			for(String genre : genres)
+				System.out.println(genre);
+		}
+		catch(SQLException ex_SQL)
+		{
+			
+		}
 		return genres;
 	}
 }

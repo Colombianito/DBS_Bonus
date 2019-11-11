@@ -1,20 +1,18 @@
 package de.hsh.dbs2.imdb.entities;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hsh.dbs2.imdb.logic.dto.CharacterDTO;
 import de.hsh.dbs2.imdb.logic.dto.MovieDTO;
+import de.hsh.dbs2.imdb.util.DBConnection;
 
 public class MovieFactory {
     
 	private Statement stmt;
-	
-    public MovieFactory() throws SQLException
-    {
-    	
-    }
     
     public List<MovieDTO> Select_All_MoviesByTitel(String search) throws SQLException
     {
@@ -22,7 +20,7 @@ public class MovieFactory {
 
 		//SQL-Statement:
         String sql_Select_Titel = "SELECT * FROM Movie WHERE UPPER(Title) LIKE UPPER('%" + search + "%')";
-        stmt = ConnectionManager.getConnection().createStatement();
+        stmt = DBConnection.getConnection().createStatement();
         System.out.println(sql_Select_Titel);
         //stmt = Select.conn.createStatement();
         //stmt.setString(1, search);
@@ -48,32 +46,61 @@ public class MovieFactory {
         return arrL_Movies;
     }
     
-    public Movie findByID(int movieID) throws SQLException
-    {
-        //SQL-Statement
-        String sql_Movie_ID = "SELECT * FROM " + Movie.table + " WHERE " + Movie.col_Movie_ID + " = ?";
-        System.out.println(sql_Movie_ID + "\n");
-        stmt = Select.conn.prepareStatement(sql_Movie_ID);
+    public static MovieDTO getMovieByID(long movieID) throws SQLException
+    {    
+    	CharacterDTO movCharacter = new CharacterDTO(); //Für Später
+        MovieDTO currentMovie = new MovieDTO();
         
-        //stmt.set(1, movieID);
+        currentMovie.setId(movieID);
+        currentMovie.setTitle(currentMovie.getTitle());
+        currentMovie.setYear(currentMovie.getYear());
+        currentMovie.setType(currentMovie.getType());
         
-        //SELECT:
-        ResultSet rs = stmt.executeQuery(sql_Movie_ID);
-        
-        Movie movie = null;
-        
-        if(!rs.next())
-        {
-            System.out.println("Der Film mit der ID " + movieID + " existiert nicht!");
+        return currentMovie;
+    }
+    
+    public void insertMovie(MovieDTO movie) throws SQLException {
+        String seq_movieID = "movie_ID";
+        String sql = "INSERT INTO MOVIE VALUES (" + seq_movieID + ".nextVal, ?, ?, ?)";
+
+        try {
+
+            PreparedStatement stmt = DBConnection.getConnection().prepareStatement(sql);
+            stmt.setString(1, movie.getTitle());
+            stmt.setInt(2, movie.getYear());
+            stmt.setString(3, movie.getType());
+            
+            int rows = stmt.executeUpdate();
+            System.out.println(rows + " Zeilen hinzugefügt");
+            
+            if (rows == 1) {
+                System.out.println("DONE");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        else
-        {
-            movie = new Movie(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4).charAt(0));
+
+    }
+    
+    public void updateMovie(MovieDTO movie) throws SQLException {
+        String sql = "UPDATE Movie SET  TITLE = ?, Year = ?, TYPE = ? WHERE MOVIEID = ?";
+
+
+        try {
+
+            PreparedStatement stmt = DBConnection.getConnection().prepareStatement(sql);
+            stmt.setString(1, movie.getTitle());
+            stmt.setInt(2, movie.getYear());
+            stmt.setString(3, movie.getType());
+            stmt.setLong(4, movie.getId());
+            stmt.executeUpdate();
+            DBConnection.getConnection().commit();
+
+            System.out.println("Movie updated.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        rs.close();
-        stmt.close();
-        
-        return movie;
     }
     
     public List<Movie> findByTitle(String title) throws SQLException
