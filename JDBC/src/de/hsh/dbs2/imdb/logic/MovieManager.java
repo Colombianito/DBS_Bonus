@@ -1,6 +1,5 @@
 package de.hsh.dbs2.imdb.logic;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -108,7 +107,7 @@ public class MovieManager {
 	{
 		try
 		{
-			mf.deleteMovieByID(movieId);
+			mf.delete_MovieDTO_ByID(movieId);
 			DBConnection.getConnection().commit();
 		}
 		catch (SQLException ex_SQL)

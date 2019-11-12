@@ -6,7 +6,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hsh.dbs2.imdb.logic.dto.CharacterDTO;
 import de.hsh.dbs2.imdb.logic.dto.MovieDTO;
 import de.hsh.dbs2.imdb.util.DBConnection;
 
@@ -48,7 +47,7 @@ public class MovieFactory {
     
     public static MovieDTO getMovieByID(long movieID) throws SQLException
     {    
-    	CharacterDTO movCharacter = new CharacterDTO(); //Für Später
+		//CharacterDTO movCharacter = new CharacterDTO(); //Für Später
         MovieDTO currentMovie = new MovieDTO();
         
         currentMovie.setId(movieID);
@@ -103,7 +102,7 @@ public class MovieFactory {
         }
     }
     
-    public void deleteMovieByID(long movieID) throws SQLException
+    public void delete_MovieDTO_ByID(long movieID) throws SQLException // Code ist falsch, es soll die komplette MovieDTO gelöscht werden
     {
     	String sql_Delete = "DELETE FROM MOVIE WHERE movieID = ?";
     	

@@ -1,7 +1,5 @@
 package de.hsh.dbs2.imdb.entities;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.List;
 
 import de.hsh.dbs2.imdb.logic.GenreManager;
 import de.hsh.dbs2.imdb.logic.MovieManager;
